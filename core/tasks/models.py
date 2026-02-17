@@ -1,6 +1,11 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy import Column, Enum, Integer, String, Text, DateTime, ForeignKey
 from core.database import Base
+import enum
 
+class StatusEnum(enum.Enum):
+    pending = "pending"
+    in_progress = "in_progress"
+    done = "done"
 
 class TaskModel(Base):
     __tablename__ = 'tasks'
@@ -8,7 +13,7 @@ class TaskModel(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String(255), nullable=False)
     description = Column(Text, nullable=True)
-    status = Column(String(50), nullable=False, default='pending')
+    status = Column(Enum(StatusEnum), default=StatusEnum.pending, nullable=False)
     created_at = Column(DateTime, nullable=False)
     updated_at = Column(DateTime, nullable=False)
 
