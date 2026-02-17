@@ -1,7 +1,8 @@
-from sqlalchemy import Column, Enum, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy import Column, Enum, ForeignKey, Integer, String, Text, DateTime
 from core.database import Base
 import enum
 from datetime import datetime,timezone
+from sqlalchemy.orm import relationship
 
 class StatusEnum(enum.Enum):
     pending = "pending"
@@ -12,6 +13,7 @@ class TaskModel(Base):
     __tablename__ = 'tasks'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer,ForeignKey("users.id"))  
     title = Column(String(255), nullable=False)
     description = Column(Text, nullable=True)
     status = Column(Enum(StatusEnum), default=StatusEnum.pending, nullable=False)
@@ -20,5 +22,5 @@ class TaskModel(Base):
                         onupdate=lambda: datetime.now(timezone.utc), nullable=False)
     due_date = Column(DateTime, nullable=True)
 
-    def __repr__(self):
-        return f"<Task(id={self.id}, title='{self.title}', status='{self.status}')>"
+    user = relationship("UserModel", back_populates="tasks",uselist=False)
+
