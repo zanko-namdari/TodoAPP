@@ -5,6 +5,7 @@ from passlib.context import CryptContext
 
 pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
+
 class UserModel(Base):
     __tablename__ = "users"
 
@@ -13,7 +14,9 @@ class UserModel(Base):
     password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
     created_date = Column(DateTime, server_default=func.now())
-    updated_date = Column(DateTime, server_default=func.now(), server_onupdate=func.now())
+    updated_date = Column(
+        DateTime, server_default=func.now(), server_onupdate=func.now()
+    )
     tasks = relationship("TaskModel", back_populates="user")
 
     def hash_password(self, plain_password: str) -> str:
