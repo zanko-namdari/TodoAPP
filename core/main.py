@@ -47,18 +47,15 @@ async def root():
     return {"message": "API is running 🚀"}
 
 
-from auth.token_auth import get_authenticated_user
+from auth.jwt_auth import get_authenticated_user
 
 
 @app.get("/public")
-def public_endpoint():
-    return {"message": "This is a public endpoint accessible to everyone."}
+def public_route():
+    return {"message": "This is a public route."}
 
 
 @app.get("/private")
-def private_endpoint(user=Depends(get_authenticated_user)):
-    print(f"Received User: {user}")
-    return {
-        "message": "This is a private endpoint accessible only to authenticated users.",
-        "user": user.username,
-    }
+def private_route(user=Depends(get_authenticated_user)):
+    print(user.id)
+    return {"message": "This is a private route."}
