@@ -1,6 +1,5 @@
 from contextlib import asynccontextmanager
 
-from auth.basic_auth import get_authenticated_user
 from fastapi import Depends, FastAPI
 from tasks.routes import router as tasks_router
 from users.routes import router as users_router
@@ -48,13 +47,18 @@ async def root():
     return {"message": "API is running 🚀"}
 
 
+from auth.token_auth import get_authenticated_user
+
+
 @app.get("/public")
 def public_endpoint():
     return {"message": "This is a public endpoint accessible to everyone."}
 
 
 @app.get("/private")
-def private_endpoint(
-    user=Depends(get_authenticated_user),
-):
-    return {"message": "Authenticated"}
+def private_endpoint(user=Depends(get_authenticated_user)):
+    print(f"Received User: {user}")
+    return {
+        "message": "This is a private endpoint accessible only to authenticated users.",
+        "user": user.username,
+    }
