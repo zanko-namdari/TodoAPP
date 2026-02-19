@@ -1,7 +1,9 @@
-from core.database import Base
 from passlib.context import CryptContext
-from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, func
+from sqlalchemy import (Boolean, Column, DateTime, ForeignKey, Integer, String,
+                        func)
 from sqlalchemy.orm import relationship
+
+from core.database import Base
 
 pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 

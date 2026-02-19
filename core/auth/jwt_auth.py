@@ -1,12 +1,13 @@
 from datetime import datetime, timedelta
 
 import jwt
-from core.config import settings
-from core.database import get_db
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jwt.exceptions import DecodeError, InvalidSignatureError
 from sqlalchemy.orm import Session
+
+from core.config import settings
+from core.database import get_db
 from users.models import UserModel
 
 security = HTTPBearer()

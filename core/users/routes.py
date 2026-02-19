@@ -1,15 +1,12 @@
 import secrets
 
-from auth.jwt_auth import (
-    decode_refresh_token,
-    generate_access_token,
-    generate_refresh_token,
-)
-from core.database import get_db
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
+from auth.jwt_auth import (decode_refresh_token, generate_access_token,
+                           generate_refresh_token)
+from core.database import get_db
 from users.models import UserModel
 from users.schemas import *
 

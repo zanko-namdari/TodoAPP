@@ -1,5 +1,6 @@
-from core.database import SessionLocal
 from faker import Faker
+
+from core.database import SessionLocal
 from tasks.models import TaskModel
 from users.models import UserModel
 

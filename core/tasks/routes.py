@@ -1,13 +1,14 @@
 from typing import List, Optional
 
-from auth.jwt_auth import get_authenticated_user
-from core.database import get_db
 from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 from sqlalchemy.orm import Session
-from users.models import UserModel
 
+from auth.jwt_auth import get_authenticated_user
+from core.database import get_db
 from tasks.models import StatusEnum, TaskModel
-from tasks.schemas import TaskCreateSchema, TaskResponseSchema, TaskUpdateSchema
+from tasks.schemas import (TaskCreateSchema, TaskResponseSchema,
+                           TaskUpdateSchema)
+from users.models import UserModel
 
 router = APIRouter(prefix="/todo", tags=["Tasks"])
 
