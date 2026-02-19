@@ -1,6 +1,6 @@
 from contextlib import asynccontextmanager
 
-from fastapi import Depends, FastAPI
+from fastapi import FastAPI
 from tasks.routes import router as tasks_router
 from users.routes import router as users_router
 
@@ -42,20 +42,3 @@ app.include_router(users_router)
 
 
 # 🔹 Root endpoint (optional)
-@app.get("/")
-async def root():
-    return {"message": "API is running 🚀"}
-
-
-from auth.jwt_auth import get_authenticated_user
-
-
-@app.get("/public")
-def public_route():
-    return {"message": "This is a public route."}
-
-
-@app.get("/private")
-def private_route(user=Depends(get_authenticated_user)):
-    print(user.id)
-    return {"message": "This is a private route."}
